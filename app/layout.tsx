@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   title: "Hisnul Muslim",
   description:
     "Kumpulan doa harian, dzikir pagi petang, ruqyah mandiri, dan amalan sesuai sunnah dalam satu aplikasi.",
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
