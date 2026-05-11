@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "./(home)/_components/navbar";
+import { AudioPlayerBar } from "./ruqyah-mandiri/_components/audio-player-bar";
 
 const roboto = Roboto({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -51,6 +52,7 @@ export default function RootLayout({
         >
           <Navbar />
           {children}
+          <AudioPlayerBar />
         </ThemeProvider>
       </body>
     </html>

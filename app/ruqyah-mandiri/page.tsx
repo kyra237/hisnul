@@ -46,9 +46,6 @@ export default async function RuqyahMandiriPage() {
           ))}
         </div>
       </div>
-
-      {/* Global player — muncul hanya saat ada yang diplay */}
-      <AudioPlayerBar />
     </>
   );
 }
