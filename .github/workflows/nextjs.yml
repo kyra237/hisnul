@@ -28,11 +28,13 @@ jobs:
           node-version: 20
           cache: pnpm
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
+      # ✅ IMPORTANT: install pnpm globally first
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      # (optional but safe)
+      - name: Verify pnpm
+        run: pnpm -v
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -42,11 +44,10 @@ jobs:
         with:
           static_site_generator: next
 
-      - name: Restore Next.js cache
+      - name: Cache Next.js build
         uses: actions/cache@v4
         with:
-          path: |
-            .next/cache
+          path: .next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.{js,jsx,ts,tsx}') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
@@ -63,14 +64,13 @@ jobs:
           path: ./out
 
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
-    runs-on: ubuntu-latest
-    needs: build
-
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5
